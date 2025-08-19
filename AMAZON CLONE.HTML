@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Amazon Clone</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #f2f2f2;
+    }
+
+    /* Navbar */
+    .navbar {
+      background-color: #131921;
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 20px;
+    }
+    .navbar h1 {
+      margin: 0;
+      font-size: 24px;
+      color: #ff9900;
+    }
+    .search-bar {
+      flex: 1;
+      margin: 0 20px;
+      display: flex;
+    }
+    .search-bar input {
+      width: 100%;
+      padding: 8px;
+      border: none;
+      border-radius: 4px 0 0 4px;
+    }
+    .search-bar button {
+      padding: 8px 12px;
+      background: #ff9900;
+      border: none;
+      border-radius: 0 4px 4px 0;
+      cursor: pointer;
+    }
+    .cart {
+      font-size: 18px;
+      cursor: pointer;
+    }
+
+    /* Product grid */
+    .products {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+      padding: 20px;
+    }
+    .product {
+      background: white;
+      padding: 15px;
+      border-radius: 8px;
+      text-align: center;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      transition: transform 0.2s;
+    }
+    .product:hover {
+      transform: scale(1.05);
+    }
+    .product img {
+      width: 100%;
+      height: 180px;
+      object-fit: contain;
+      margin-bottom: 10px;
+    }
+    .product h3 {
+      font-size: 18px;
+      margin: 10px 0;
+    }
+    .product p {
+      font-size: 16px;
+      color: green;
+      margin: 5px 0;
+    }
+    .product button {
+      background: #ff9900;
+      border: none;
+      padding: 8px 12px;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+
+    /* Cart Page */
+    #cartPage {
+      display: none;
+      padding: 20px;
+    }
+    #cartItems {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .cart-item {
+      background: white;
+      padding: 10px;
+      border-radius: 6px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+    .cart-item img {
+      height: 60px;
+      width: 60px;
+      object-fit: contain;
+    }
+    .back-btn {
+      background: #131921;
+      color: white;
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-bottom: 15px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <div class="navbar">
+    <h1 onclick="showProducts()">Amazon Clone</h1>
+    <div class="search-bar">
+      <input type="text" id="searchInput" placeholder="Search products...">
+      <button onclick="searchProduct()">Search</button>
+    </div>
+    <div class="cart" onclick="viewCart()">🛒 Cart (<span id="cartCount">0</span>)</div>
+  </div>
+
+  <!-- Products -->
+  <div class="products" id="productList">
+    <!-- Each product -->
+    <div class="product">
+      <img src="https://m.media-amazon.com/images/I/71TPda7cwUL._AC_UY327_FMwebp_QL65_.jpg" alt="Laptop">
+      <h3>Laptop</h3>
+      <p>$999</p>
+      <button onclick="addToCart('Laptop',999,this.previousElementSibling.previousElementSibling.src)">Add to Cart</button>
+    </div>
+    <div class="product">
+      <img src="https://m.media-amazon.com/images/I/61v7sRhdJGL._AC_UY327_FMwebp_QL65_.jpg" alt="Smartphone">
+      <h3>Smartphone</h3>
+      <p>$499</p>
+      <button onclick="addToCart('Smartphone',499,this.previousElementSibling.previousElementSibling.src)">Add to Cart</button>
+    </div>
+    <div class="product">
+      <img src="https://m.media-amazon.com/images/I/61+VwFG1KNL._AC_UY327_FMwebp_QL65_.jpg" alt="Headphones">
+      <h3>Headphones</h3>
+      <p>$99</p>
+      <button onclick="addToCart('Headphones',99,this.previousElementSibling.previousElementSibling.src)">Add to Cart</button>
+    </div>
+    <div class="product">
+      <img src="https://m.media-amazon.com/images/I/71X7b2wN6RL._AC_UY327_FMwebp_QL65_.jpg" alt="Smart Watch">
+      <h3>Smart Watch</h3>
+      <p>$199</p>
+      <button onclick="addToCart('Smart Watch',199,this.previousElementSibling.previousElementSibling.src)">Add to Cart</button>
+    </div>
+    <div class="product">
+      <img src="https://m.media-amazon.com/images/I/71Q8czKqSIL._AC_UY327_FMwebp_QL65_.jpg" alt="Shoes">
+      <h3>Running Shoes</h3>
+      <p>$79</p>
+      <button onclick="addToCart('Shoes',79,this.previousElementSibling.previousElementSibling.src)">Add to Cart</button>
+    </div>
+    <div class="product">
+      <img src="https://m.media-amazon.com/images/I/91fP9ZK7LgL._AC_UY327_FMwebp_QL65_.jpg" alt="Backpack">
+      <h3>Backpack</h3>
+      <p>$49</p>
+      <button onclick="addToCart('Backpack',49,this.previousElementSibling.previousElementSibling.src)">Add to Cart</button>
+    </div>
+    <div class="product">
+      <img src="https://m.media-amazon.com/images/I/81WcnNQ-TBL._AC_UY327_FMwebp_QL65_.jpg" alt="Book">
+      <h3>Book: Atomic Habits</h3>
+      <p>$15</p>
+      <button onclick="addToCart('Book: Atomic Habits',15,this.previousElementSibling.previousElementSibling.src)">Add to Cart</button>
+    </div>
+    <div class="product">
+      <img src="https://m.media-amazon.com/images/I/71NIpWAf9DL._AC_UY327_FMwebp_QL65_.jpg" alt="Camera">
+      <h3>DSLR Camera</h3>
+      <p>$799</p>
+      <button onclick="addToCart('DSLR Camera',799,this.previousElementSibling.previousElementSibling.src)">Add to Cart</button>
+    </div>
+    <div class="product">
+      <img src="https://m.media-amazon.com/images/I/81+yTGr6p-L._AC_UY327_FMwebp_QL65_.jpg" alt="Tablet">
+      <h3>Tablet</h3>
+      <p>$299</p>
+      <button onclick="addToCart('Tablet',299,this.previousElementSibling.previousElementSibling.src)">Add to Cart</button>
+    </div>
+    <div class="product">
+      <img src="https://m.media-amazon.com/images/I/81cfyJ1U-LL._AC_UY327_FMwebp_QL65_.jpg" alt="Gaming Console">
+      <h3>Gaming Console</h3>
+      <p>$399</p>
+      <button onclick="addToCart('Gaming Console',399,this.previousElementSibling.previousElementSibling.src)">Add to Cart</button>
+    </div>
+  </div>
+
+  <!-- Cart Page -->
+  <div id="cartPage">
+    <button class="back-btn" onclick="showProducts()">⬅ Back to Products</button>
+    <h2>Your Cart</h2>
+    <div id="cartItems"></div>
+    <h3 id="totalPrice"></h3>
+  </div>
+
+  <script>
+    let cart = [];
+
+    function addToCart(product, price, img) {
+      cart.push({product, price, img});
+      document.getElementById("cartCount").innerText = cart.length;
+      alert(product + " added to cart!");
+    }
+
+    function viewCart() {
+      document.getElementById("productList").style.display = "none";
+      document.getElementById("cartPage").style.display = "block";
+
+      let cartItemsDiv = document.getElementById("cartItems");
+      cartItemsDiv.innerHTML = "";
+
+      let total = 0;
+      cart.forEach(item => {
+        total += item.price;
+        cartItemsDiv.innerHTML += `
+          <div class="cart-item">
+            <img src="${item.img}" alt="">
+            <span>${item.product} - $${item.price}</span>
+          </div>
+        `;
+      });
+
+      document.getElementById("totalPrice").innerText = "Total: $" + total;
+    }
+
+    function showProducts() {
+      document.getElementById("cartPage").style.display = "none";
+      document.getElementById("productList").style.display = "grid";
+    }
+
+    function searchProduct() {
+      let input = document.getElementById("searchInput").value.toLowerCase();
+      let products = document.getElementsByClassName("product");
+      
+      for (let i = 0; i < products.length; i++) {
+        let title = products[i].getElementsByTagName("h3")[0].innerText.toLowerCase();
+        if (title.includes(input)) {
+          products[i].style.display = "block";
+        } else {
+          products[i].style.display = "none";
+        }
+      }
+    }
+  </script>
+</body>
+</html>
